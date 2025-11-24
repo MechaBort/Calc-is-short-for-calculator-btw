@@ -5,6 +5,11 @@ import static java.awt.GraphicsDevice.WindowTranslucency.PERPIXEL_TRANSLUCENT;
 import static java.awt.GraphicsDevice.WindowTranslucency.PERPIXEL_TRANSPARENT;
 import static java.awt.GraphicsDevice.WindowTranslucency.TRANSLUCENT;
 import java.awt.GraphicsEnvironment;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.geom.Ellipse2D;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 
 
@@ -22,6 +27,18 @@ public class ViewCalculator extends javax.swing.JFrame {
     public ViewCalculator() {
         super("Calculator 360");
         initComponents();
+        
+        addComponentListener(new ComponentAdapter() {
+        // Give the window an elliptical shape.
+        // If the window is resized, the shape is recalculated here.
+        @Override
+        public void componentResized(ComponentEvent e) {
+            setShape(new Ellipse2D.Double(0,0,getWidth(),getHeight()));
+        }
+        });
+
+        // Create the GUI on the event-dispatching thread
+        
         //tryCircle();
     }
 
@@ -60,6 +77,7 @@ public class ViewCalculator extends javax.swing.JFrame {
         btnDecimal = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         setResizable(false);
         setShape(getShape());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
