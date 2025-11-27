@@ -158,6 +158,15 @@ public class ViewCalculator extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void clear() {}
+    public void appendOperation() {}
+    public void appendDot() {}
+    
+    public void appendNum(int num) {
+        txtContent.setText("");
+        
+        
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAdd;
@@ -186,19 +195,4 @@ public class ViewCalculator extends javax.swing.JFrame {
     public java.awt.TextField txtContent;
     // End of variables declaration//GEN-END:variables
 
-    private void tryCircle() {
-        // Determine what the default GraphicsDevice can support.
-        GraphicsEnvironment ge =
-            GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice gd = ge.getDefaultScreenDevice();
-
-        boolean isUniformTranslucencySupported =
-            gd.isWindowTranslucencySupported(TRANSLUCENT);
-        boolean isPerPixelTranslucencySupported =
-            gd.isWindowTranslucencySupported(PERPIXEL_TRANSLUCENT);
-        boolean isShapedWindowSupported =
-            gd.isWindowTranslucencySupported(PERPIXEL_TRANSPARENT);
-        
-        
-    }
 }
