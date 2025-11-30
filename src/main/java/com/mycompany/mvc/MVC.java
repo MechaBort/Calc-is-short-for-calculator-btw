@@ -1,17 +1,16 @@
 package com.mycompany.mvc;
 
-import java.awt.GraphicsDevice;
-import static java.awt.GraphicsDevice.WindowTranslucency.TRANSLUCENT;
-import java.awt.GraphicsEnvironment;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
-
 public class MVC {
 
     public static void main(String args[]) {
     
  
+        float num = 1.5f;
+        
+        String s = Integer.toBinaryString(Float.floatToIntBits(num));
+        System.out.println(s);
+        System.out.println(Float.floatToRawIntBits(num));
+        
         ViewCalculator view = new ViewCalculator();
         ModelCalculator model = new ModelCalculator();
 

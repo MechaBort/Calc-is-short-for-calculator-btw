@@ -1,5 +1,10 @@
 package com.mycompany.mvc;
 
+import java.util.ArrayList;
+import java.util.Queue;
+import javax.swing.JOptionPane;
+import javax.swing.plaf.metal.OceanTheme;
+
 
 public class ModelCalculator {
 
@@ -7,9 +12,27 @@ public class ModelCalculator {
     float numberTwo;
     int decimalPosition;
     char operation;
+    Register register;
+    ViewCalculator view;
+
+    public void addDecimal(int i) {
+        
+        if (num == CurrentNum.One) {
+            numberOne = (float) (numberOne + (i * Math.pow(10, -decimalPosition)));
+        } else {
+            numberTwo = (float) (numberTwo + (i * Math.pow(10, -decimalPosition)));
+        }
     
-    public ModelCalculator() {
+    }
     
+    public enum CurrentNum {
+        One, Two
+    }
+    
+    CurrentNum num = CurrentNum.One;
+    
+    public ModelCalculator(ViewCalculator view) {
+        this.view = view;
     }
     
     void add() {
@@ -17,19 +40,28 @@ public class ModelCalculator {
     }
 
     void sub() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        operation = '-';
     }
 
     void product() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        operation = '*';
     }
 
     void divide() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        operation = '/';
     }
 
     void addNum(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (decimalPosition != 0) {
+            addDecimal(i);
+            return;
+        }
+        
+        if (num == CurrentNum.One) {
+            numberOne = numberOne * 10 + i;
+        } else {
+            numberTwo = numberTwo * 10 + 1;
+        }
     }
 
     void moveDecimal() {
@@ -47,42 +79,85 @@ public class ModelCalculator {
     }
 
     void calculate() {
+        String save = Float.toString(numberOne) + operation + Float.toString(numberTwo) + '=';
+        
         switch (operation) {
             case '+':
-                
+                numberOne += numberTwo;
+                numberTwo = 0;
                 break;
             case '-':
-                
+                numberOne -= numberTwo;
+                numberTwo = 0;
                 break;
             case '*':
-                    
+                numberOne *= numberTwo;
+                numberTwo = 0;
                 break;
             case '/':
-                
+                if (numberTwo == 0) {return;}
+                numberOne /= numberTwo;
+                numberTwo = 0;
                 break;
             default:
-                throw new AssertionError();
+                return;
         }
+        
+        operation = ' ';
+        save += Float.toString(numberOne);
     }
 
     void binary() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        calculate();
+        Integer.toBinaryString(Float.floatToIntBits(numberOne)); 
     }
 
+    boolean isPrime() {
+        calculate();
+        double square = Math.sqrt(numberOne);
+        for (int n = 2; n <= square; n++) {
+            if (numberOne % n == 0) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
     void prime() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        if (isPrime()) {
+        
+        } else {
+        
+        }
+        
     }
 
     void average() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+        ArrayList<Float> arr = register.getNumRegister();
+        
+        int n = arr.size();
+        float sum = 0;
+        
+        for (float num : arr) {
+            sum += num;
+        }
+        
+        sum /= n;
     }
 
     void data() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        JOptionPane pane = new JOptionPane();
+        
+        // show the register.register in the Pane
+        
     }
 
     void store() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        calculate();
+        register.add(numberOne);
     }
 
 }
