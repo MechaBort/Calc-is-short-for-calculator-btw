@@ -22,6 +22,8 @@ public class ModelCalculator {
         } else {
             numberTwo = (float) (numberTwo + (i * Math.pow(10, -decimalPosition)));
         }
+        decimalPosition++;
+        view.appendNum(i);
     
     }
     
@@ -33,22 +35,31 @@ public class ModelCalculator {
     
     public ModelCalculator(ViewCalculator view) {
         this.view = view;
+        register = new Register();
     }
     
     void add() {
         operation = '+';
+        num = CurrentNum.Two;
+        view.appendOperation('+');
     }
 
     void sub() {
         operation = '-';
+        num = CurrentNum.Two;
+        view.appendOperation('-');
     }
 
     void product() {
         operation = '*';
+        num = CurrentNum.Two;
+        view.appendOperation('*');
     }
 
     void divide() {
         operation = '/';
+        num = CurrentNum.Two;
+        view.appendOperation('/');
     }
 
     void addNum(int i) {
@@ -60,13 +71,15 @@ public class ModelCalculator {
         if (num == CurrentNum.One) {
             numberOne = numberOne * 10 + i;
         } else {
-            numberTwo = numberTwo * 10 + 1;
+            numberTwo = numberTwo * 10 + i;
         }
+        view.appendNum(i);
     }
 
     void moveDecimal() {
         if (decimalPosition == 0) {
             decimalPosition = 1;
+            view.appendDot();
         }
         // todo: UPDATE View
     }
@@ -76,6 +89,8 @@ public class ModelCalculator {
         numberTwo = 0f;
         decimalPosition = 0;
         operation = ' ';
+        num = CurrentNum.One;
+        view.clear();
     }
 
     void calculate() {
@@ -105,11 +120,15 @@ public class ModelCalculator {
         
         operation = ' ';
         save += Float.toString(numberOne);
+        register.add(save);
+        num = CurrentNum.One;
+        view.setResult(Float.toString(numberOne));
     }
 
     void binary() {
         calculate();
-        Integer.toBinaryString(Float.floatToIntBits(numberOne)); 
+        String bin = Integer.toBinaryString(Float.floatToIntBits(numberOne));
+        view.setResult(bin);
     }
 
     boolean isPrime() {
@@ -127,9 +146,9 @@ public class ModelCalculator {
     void prime() {
         
         if (isPrime()) {
-        
+            view.setResult("Prime");
         } else {
-        
+            view.setResult("Not Prime");
         }
         
     }
@@ -145,13 +164,22 @@ public class ModelCalculator {
             sum += num;
         }
         
-        sum /= n;
+        if (n > 0) {
+            sum /= n;
+            view.setResult(Float.toString(sum));
+        } else {
+            view.setResult("No data");
+        }
     }
 
     void data() {
         JOptionPane pane = new JOptionPane();
-        
-        // show the register.register in the Pane
+        ArrayList<Float> nums = register.getNumRegister();
+        String msg = "Stored numbers:\n";
+        for (float f : nums) {
+            msg += f + "\n";
+        }
+        JOptionPane.showMessageDialog(null, msg);
         
     }
 

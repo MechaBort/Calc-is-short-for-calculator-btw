@@ -12,7 +12,7 @@ public class MVC {
         System.out.println(Float.floatToRawIntBits(num));
         
         ViewCalculator view = new ViewCalculator();
-        ModelCalculator model = new ModelCalculator();
+        ModelCalculator model = new ModelCalculator(view);
 
         ControllerCalculator controller = new 
             ControllerCalculator(view, model);

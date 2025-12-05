@@ -5,13 +5,19 @@ import java.util.ArrayList;
 public class Register {
 
     static String ARCHIVO_REGISTRO = "registro.bn";
+    static String NUM_ARCHIVO_REGISTRO = "num_registro.bn";
     
     ArrayList<String> register;
     ArrayList<Float> numRegister;
     
     public Register() {
-        register = new ArrayList<>();
-        numRegister = new ArrayList<>();
+        
+        // read the current files
+        register = (ArrayList<String>) FileManager.readObject(ARCHIVO_REGISTRO);
+        if (register == null) register = new ArrayList<>();
+        
+        numRegister = (ArrayList<Float>) FileManager.readObject(NUM_ARCHIVO_REGISTRO);
+        if (numRegister == null) numRegister = new ArrayList<>();
     }
     
     public void add(float num) {
@@ -38,7 +44,7 @@ public class Register {
     
     void updateFile() {
         FileManager.writeObject(register, ARCHIVO_REGISTRO);
-        FileManager.writeObject(numRegister, ARCHIVO_REGISTRO);
+        FileManager.writeObject(numRegister, NUM_ARCHIVO_REGISTRO);
     }
 
     ArrayList<Float> getNumRegister() {

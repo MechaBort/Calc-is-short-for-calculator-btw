@@ -158,14 +158,22 @@ public class ViewCalculator extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void clear() {}
-    public void appendOperation() {}
-    public void appendDot() {}
+    public void clear() {
+        txtContent.setText("");
+    }
+    public void appendOperation(char op) {
+        txtContent.setText(txtContent.getText() + op);
+    }
+    public void appendDot() {
+        txtContent.setText(txtContent.getText() + ".");
+    }
     
     public void appendNum(int num) {
-        txtContent.setText("");
-        
-        
+        txtContent.setText(txtContent.getText() + num);
+    }
+    
+    public void setResult(String result) {
+        txtContent.setText(result);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
